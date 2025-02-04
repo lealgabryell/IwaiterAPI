@@ -1,5 +1,6 @@
 package br.iwaiter.exceptions;
 
+import br.iwaiter.exceptions.cliente.ClienteNotSavedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

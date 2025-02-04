@@ -1,4 +1,4 @@
-package br.iwaiter.exceptions;
+package br.iwaiter.exceptions.cliente;
 
 public class ClienteNotSavedException extends RuntimeException{
     public ClienteNotSavedException(String message) {
