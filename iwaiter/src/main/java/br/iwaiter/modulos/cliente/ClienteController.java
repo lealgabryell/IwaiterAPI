@@ -1,5 +1,6 @@
 package br.iwaiter.modulos.cliente;
 
+import br.iwaiter.exceptions.ClienteNotSavedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,16 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody ClienteDTO clienteDTO) {
-        String c = this.clienteService.save(clienteDTO);
-        if(c.contains("salvo com sucesso!")){
-        return new ResponseEntity<>(c, HttpStatus.CREATED);
-        }else{
-            return new ResponseEntity<>(c, HttpStatus.BAD_REQUEST);
+        try {
+            String c = this.clienteService.save(clienteDTO);
+            return new ResponseEntity<>(c, HttpStatus.CREATED);
+        } catch (ClienteNotSavedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
