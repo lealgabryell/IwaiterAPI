@@ -35,4 +35,26 @@ public class ProdutoController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<ProdutoEntity> findById(@PathVariable Long id) {
+        try{
+            ProdutoEntity produto = this.produtoService.findById(id);
+            return new ResponseEntity<>(produto, HttpStatus.OK);
+        } catch(ProdutoNotSavedException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        try{
+            String retorno = this.produtoService.deleteById(id);
+            return new ResponseEntity<>(retorno, HttpStatus.CREATED);
+        } catch (ProdutoNotSavedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

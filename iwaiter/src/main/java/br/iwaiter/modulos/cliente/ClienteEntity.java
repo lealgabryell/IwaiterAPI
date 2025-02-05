@@ -1,9 +1,12 @@
 package br.iwaiter.modulos.cliente;
 
+import br.iwaiter.modulos.pedido.PedidoEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -14,6 +17,9 @@ public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<PedidoEntity> pedidos;
 
     private String nome;
     @Column(unique = true)
